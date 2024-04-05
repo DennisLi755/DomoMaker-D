@@ -35,6 +35,11 @@ const handleError = (message) => {
     }
   };
 
+  const sendDelete = async (url) => {
+    await fetch(url, { method: 'DELETE' });
+    console.log('deleted resource');
+  }
+
   const hideError = () => {
     document.getElementById('domoMessage').classList.add('hidden');
   };
@@ -42,5 +47,6 @@ const handleError = (message) => {
   module.exports = {
     handleError,
     sendPost,
+    sendDelete,
     hideError,
   }

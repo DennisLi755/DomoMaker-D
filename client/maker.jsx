@@ -9,14 +9,21 @@ const handleDomo = (e, onDomoAdded) => {
 
     const name = e.target.querySelector('#domoName').value;
     const age = e.target.querySelector('#domoAge').value;
+    const favoriteFood = e.target.querySelector('#domoFood').value
+    console.log(favoriteFood);
 
     if (!name || !age) {
-        helper.handleError('All fields are required');
+        helper.handleError('Name and age are required!');
         return false;
     }
 
-    helper.sendPost(e.target.action, {name, age}, onDomoAdded);
+    helper.sendPost(e.target.action, {name, age, favoriteFood}, onDomoAdded);
     return false;
+}
+
+const deleteDomo = (e) => {
+    e.preventDefault();
+    helper.hideError();
 }
 
 const DomoForm = (props) => {
@@ -28,10 +35,12 @@ const DomoForm = (props) => {
             method="POST"
             className="domoForm"
         >
-            <label htmlFor="name">Name: </label>
+            <label htmlFor="name">Name*: </label>
             <input id="domoName" type="text" name="name" placeholder="Domo Name" />
-            <label htmlFor="age">Age: </label>
+            <label htmlFor="age">Age*: </label>
             <input id="domoAge" type="number" min="0" name="age"/>
+            <label htmlFor="favoriteFood">Favorite Food: </label>
+            <input id="domoFood" type="text" name="favoriteFood" placeholder="Favorite Food" />
             <input className="makeDomoSubmit" type="submit" value="Make Domo" />
         </form>
     );
@@ -63,6 +72,8 @@ const DomoList = (props) => {
                 <img src="assets/img/domoface.jpeg" alt="domo face" className="domoFace" />
                 <h3 className="domoName">Name: {domo.name}</h3>
                 <h3 className="domoAge">Age: {domo.age}</h3>
+                <h3 className="domoFood">Favorite Food: {domo.favoriteFood}</h3>
+                <button type="submit" action="/maker" method="DELETE" onClick={(e) => deleteDomo(e, props.triggerReload)}>Delete Domo</button>
             </div>
         );
     });
