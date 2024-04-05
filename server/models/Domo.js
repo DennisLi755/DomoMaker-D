@@ -18,7 +18,7 @@ const DomoSchema = new mongoose.Schema({
   favoriteFood: {
     type: String,
     required: false,
-    trim: true
+    trim: true,
   },
   owner: {
     type: mongoose.Schema.ObjectId,
@@ -34,7 +34,7 @@ const DomoSchema = new mongoose.Schema({
 DomoSchema.statics.toAPI = (doc) => ({
   name: doc.name,
   age: doc.age,
-  favoriteFood: doc.favoriteFood
+  favoriteFood: doc.favoriteFood,
 });
 
 const DomoModel = mongoose.model('Domo', DomoSchema);
