@@ -4,6 +4,8 @@ const { Domo } = models;
 
 const makerPage = async (req, res) => res.render('app');
 
+const statsPage = async (req, res) => res.render('stats');
+
 const makeDomo = async (req, res) => {
   if (!req.body.name || !req.body.age) {
     return res.status(400).json({ error: 'Both name and age are required' });
@@ -48,6 +50,7 @@ const getDomos = async (req, res) => {
 
 module.exports = {
   makerPage,
+  statsPage,
   makeDomo,
   getDomos,
 };

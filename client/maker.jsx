@@ -21,11 +21,6 @@ const handleDomo = (e, onDomoAdded) => {
     return false;
 }
 
-const deleteDomo = (e) => {
-    e.preventDefault();
-    helper.hideError();
-}
-
 const DomoForm = (props) => {
     return (
         <form id="domoForm"
@@ -73,14 +68,54 @@ const DomoList = (props) => {
                 <h3 className="domoName">Name: {domo.name}</h3>
                 <h3 className="domoAge">Age: {domo.age}</h3>
                 <h3 className="domoFood">Favorite Food: {domo.favoriteFood}</h3>
-                <button type="submit" action="/maker" method="DELETE" onClick={(e) => deleteDomo(e, props.triggerReload)}>Delete Domo</button>
             </div>
         );
     });
 
+    const calculateAvgAge = () => domos.reduce((sum, domo) => sum + domo.age, 0) / domos.length;
+
+    const mostCommonFood = () => {
+        let foodMap = {};
+        domos.map((domo) => {
+            if (!foodMap[domo.favoriteFood]) {
+                foodMap[domo.favoriteFood] = 1;
+            } else {
+                foodMap[domo.favoriteFood]++;
+            }
+        });
+        return Object.keys(foodMap).reduce((a, b) => foodMap[a] > foodMap[b] ? a : b);
+    };
+
+    const findLongestName = () => {
+        let longestName = '';
+        domos.map((domo) => {
+            if (domo.name.length > longestName.length) {
+                longestName = domo.name;
+            }
+        });
+        console.log(longestName);
+        return longestName;
+    }
+
+    const domoStats = (
+        <div>
+            Domo Statistics:
+            <ul>
+                <li>Longest Name: {findLongestName()}</li>
+                <li>Average Age: {calculateAvgAge()}</li>
+                <li>Most Common Food: {mostCommonFood()}</li>
+            </ul>
+        </div>
+    );
+
     return (
-        <div className="domoList">
-            {domoNodes}
+        <div>
+            <div className="domoList">
+                {domoNodes}
+            </div>
+            <div>
+                {domoStats}
+            </div>
         </div>
     );
 };
